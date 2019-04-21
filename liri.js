@@ -6,9 +6,6 @@ require('dotenv').config()
 const fs = require('fs')
 const [, , action, ...userInput] = process.argv
 
-// console.log(action)
-// console.log(userInput.length)
-
 const crankTheBass = _ => {
   console.log('concert')
   console.log(`
@@ -43,18 +40,20 @@ const lightsCameraAction = _ => {
 }
 
 const justDoIt = _ => {
-  console.log('read')
   fs.readFile('random.txt', 'utf8', (e, data) => {
     if (e) {
       console.log(e)
     } else {
       console.log(data)
-      // let readAction = data[0]
+      let readInfo = data.split(',')
+      let readAction = readInfo[0]
+      console.log(readAction)
+      // doSomething(readAction)
     }
   })
 }
 
-const doSomething = _ => {
+const doSomething = action => {
   switch (action) {
     case 'concert-this':
       crankTheBass()
@@ -73,4 +72,4 @@ const doSomething = _ => {
   }
 }
 
-doSomething()
+doSomething(action)
