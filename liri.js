@@ -1,19 +1,28 @@
 require('dotenv').config()
 // const keys = require('./keys.js')
 // const spotify = new Spotify(keys.spotify)
-// const axios = require('axios')
+const axios = require('axios')
 // const inquirer = require('inquirer')
 const fs = require('fs')
 const [, , action, ...userInput] = process.argv
 const lookup = userInput.join(' ')
 
 const crankTheBass = lookup => {
-  console.log(lookup)
-  console.log(`
-  Venue:
-  Location:
-  Date:
-  `)
+  if (lookup === '') {
+    console.log(`Please provide a valid band name to search for.`)
+  } else {
+    axios.get(`https://rest.bandsintown.com/artists/${lookup}/events?app_id=codingbootcamp&date=upcoming`)
+      .then(r => {
+        console.log(r[0])
+      }
+        // console.log(`
+        // Venue:
+        // Location:
+        // Date:
+        // `)
+      )
+      .catch(e => console.log(e))
+  }
 }
 
 const playThatFunkyMusic = lookup => {
