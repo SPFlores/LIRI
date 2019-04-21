@@ -1,3 +1,7 @@
 require('dotenv').config()
-var keys = require('./keys.js')
-var spotify = new Spotify(keys.spotify)
+const keys = require('./keys.js')
+const spotify = new Spotify(keys.spotify)
+const axios = require('axios')
+const inquirer = require('inquirer')
+const [, , pArgs] = process.argv
+
