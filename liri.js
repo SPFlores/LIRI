@@ -5,9 +5,10 @@ require('dotenv').config()
 // const inquirer = require('inquirer')
 const fs = require('fs')
 const [, , action, ...userInput] = process.argv
+const lookup = userInput.join(' ')
 
-const crankTheBass = _ => {
-  console.log('concert')
+const crankTheBass = lookup => {
+  console.log(lookup)
   console.log(`
   Venue:
   Location:
@@ -15,8 +16,8 @@ const crankTheBass = _ => {
   `)
 }
 
-const playThatFunkyMusic = _ => {
-  console.log('spotify')
+const playThatFunkyMusic = lookup => {
+  console.log(lookup)
   console.log(`
   Artist:
   Song:
@@ -25,8 +26,8 @@ const playThatFunkyMusic = _ => {
   `)
 }
 
-const lightsCameraAction = _ => {
-  console.log('movie')
+const lightsCameraAction = lookup => {
+  console.log(lookup)
   console.log(`
   Title:
   Year:
@@ -44,25 +45,24 @@ const justDoIt = _ => {
     if (e) {
       console.log(e)
     } else {
-      console.log(data)
       let readInfo = data.split(',')
       let readAction = readInfo[0]
-      console.log(readAction)
-      // doSomething(readAction)
+      let readLookup = readInfo[1]
+      doSomething(readAction, readLookup)
     }
   })
 }
 
-const doSomething = action => {
+const doSomething = (action, lookup) => {
   switch (action) {
     case 'concert-this':
-      crankTheBass()
+      crankTheBass(lookup)
       break
     case 'spotify-this-song':
-      playThatFunkyMusic()
+      playThatFunkyMusic(lookup)
       break
     case 'movie-this':
-      lightsCameraAction()
+      lightsCameraAction(lookup)
       break
     case 'do-what-it-says':
       justDoIt()
@@ -72,4 +72,4 @@ const doSomething = action => {
   }
 }
 
-doSomething(action)
+doSomething(action, lookup)
