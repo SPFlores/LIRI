@@ -1,9 +1,9 @@
 require('dotenv').config()
-// const keys = require('./keys.js')
-// const spotify = new Spotify(keys.spotify)
+const keys = require('./keys.js')
+var Spotify = require('node-spotify-api')
+const spotify = new Spotify(keys.spotify)
 const axios = require('axios')
 const moment = require('moment')
-// const inquirer = require('inquirer')
 const fs = require('fs')
 const [, , action, ...userInput] = process.argv
 const lookup = userInput.join(' ')
@@ -33,18 +33,19 @@ const crankTheBass = lookup => {
 }
 
 const playThatFunkyMusic = lookup => {
-  console.log(lookup)
-  axios.get('')
+  let searchSong = lookup.split(' ').join('+')
+  console.log(spotify.credentials.id)
+  axios.get(`https://api.spotify.com/v1/search?query="${searchSong}"&limit=1&type=track,artist&Authorization=${spotify.credentials.id}`)
     .then(r => {
-
+      // console.log(r.response)
+      // console.log(`
+      // Artist:
+      // Song:
+      // Link:
+      // Album:
+      // `)
     })
-    .catch(e => console.log(e))
-  console.log(`
-  Artist:
-  Song:
-  Link:
-  Album:
-  `)
+    // .catch(e => console.log(e))
 }
 
 const lightsCameraAction = lookup => {
