@@ -34,34 +34,33 @@ const crankTheBass = lookup => {
 
 const playThatFunkyMusic = lookup => {
   let searchSong = lookup.split(' ').join('+')
-  console.log(spotify.credentials.id)
-  axios.get(`https://api.spotify.com/v1/search?query="${searchSong}"&limit=1&type=track,artist&Authorization=${spotify.credentials.id}`)
+  // console.log(spotify.credentials.id)
+  spotify.search({ type: 'track,artist', query: searchSong, limit: 1 })
     .then(r => {
-      // console.log(r.response)
+      let info = r.tracks.items[0]
+      console.log(info)
       // console.log(`      ***************
-      // Artist:
-      // Song:
-      // Link:
-      // Album:
+      // Artist: ${}
+      // Song: ${}
+      // Link: ${}
+      // Album: ${info.album.name}
       // ***************`)
     })
-  // .catch(e => console.log(e))
+    .catch(e => console.log(e))
 }
 
 const lightsCameraAction = lookup => {
   axios.get(`http://www.omdbapi.com/?t=${lookup}&apikey=8bf4b530`)
-    .then(r => {
-      let movieInfo = r.data
-      console.log(r.data)
+    .then(({ data }) => {
       console.log(`      ***************
-      Title: ${movieInfo.Title}
-      Year: ${movieInfo.Year}
-      IMDB Rating: ${movieInfo.Ratings[0].Value}
-      Rotten Tomatoes Rating: ${movieInfo.Ratings[1].Value}
-      Country: ${movieInfo.Country}
-      Language: ${movieInfo.Language}
-      Plot: ${movieInfo.Plot}
-      Actors: ${movieInfo.Actors}
+      Title: ${data.Title}
+      Year: ${data.Year}
+      IMDB Rating: ${data.Ratings[0].Value}
+      Rotten Tomatoes Rating: ${data.Ratings[1].Value}
+      Country: ${data.Country}
+      Language: ${data.Language}
+      Plot: ${data.Plot}
+      Actors: ${data.Actors}
       ***************`)
     })
     .catch(e => console.log(e))
