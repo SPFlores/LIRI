@@ -19,13 +19,13 @@ const crankTheBass = lookup => {
         } else {
           let venue = data[0].venue
           let concertDate = data[0].datetime.slice(0, 10)
-          console.log(`
+          console.log(`      ***************
           THe next scheduled show for ${lookup} is:
 
           Venue: ${venue.name}
           Location: ${venue.city}, ${venue.region}
           Date: ${moment(concertDate, 'YYYY-MM-DD').format('MM/DD/YYYY')}
-          `)
+          ***************`)
         }
       })
       .catch(e => console.log(e))
@@ -38,28 +38,33 @@ const playThatFunkyMusic = lookup => {
   axios.get(`https://api.spotify.com/v1/search?query="${searchSong}"&limit=1&type=track,artist&Authorization=${spotify.credentials.id}`)
     .then(r => {
       // console.log(r.response)
-      // console.log(`
+      // console.log(`      ***************
       // Artist:
       // Song:
       // Link:
       // Album:
-      // `)
+      // ***************`)
     })
-    // .catch(e => console.log(e))
+  // .catch(e => console.log(e))
 }
 
 const lightsCameraAction = lookup => {
-  console.log(lookup)
-  console.log(`
-  Title:
-  Year:
-  IMDB Rating:
-  Rotten Tomatoes Rating:
-  Country:
-  Language:
-  Plot:
-  Actors:
-  `)
+  axios.get(`http://www.omdbapi.com/?t=${lookup}&apikey=8bf4b530`)
+    .then(r => {
+      let movieInfo = r.data
+      console.log(r.data)
+      console.log(`      ***************
+      Title: ${movieInfo.Title}
+      Year: ${movieInfo.Year}
+      IMDB Rating: ${movieInfo.Ratings[0].Value}
+      Rotten Tomatoes Rating: ${movieInfo.Ratings[1].Value}
+      Country: ${movieInfo.Country}
+      Language: ${movieInfo.Language}
+      Plot: ${movieInfo.Plot}
+      Actors: ${movieInfo.Actors}
+      ***************`)
+    })
+    .catch(e => console.log(e))
 }
 
 const justDoIt = _ => {
