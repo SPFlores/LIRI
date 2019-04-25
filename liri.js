@@ -19,8 +19,8 @@ const crankTheBass = lookup => {
         } else {
           let venue = data[0].venue
           let concertDate = data[0].datetime.slice(0, 10)
-          console.log(`      ***************
-          THe next scheduled show for ${lookup} is:
+          console.log(`          ***************
+          The next scheduled show for ${lookup} is:
 
           Venue: ${venue.name}
           Location: ${venue.city}, ${venue.region}
@@ -28,7 +28,7 @@ const crankTheBass = lookup => {
           ***************`)
         }
       })
-      .catch(e => console.log(e))
+      .catch(e => console.log(`Please provide a valid band name to search for.`))
   }
 }
 
@@ -37,26 +37,30 @@ const playThatFunkyMusic = lookup => {
   let searchSong = searchString.join('')
   // let searchArtist = searchString[1]
 
-  if (searchSong) {
-    spotify
-      .search({ type: 'track', query: searchSong, limit: 1 })
-      .then(r => {
-        let info = r.tracks.items[0]
+  if (!searchSong) {
+    searchSong = 'The Sign Ace of Base'
+  }
 
-        console.log(`      ***************
+  spotify
+    .search({ type: 'track', query: searchSong, limit: 1 })
+    .then(r => {
+      let info = r.tracks.items[0]
+
+      console.log(`      ***************
       Artist: ${info.artists[0].name}
       Song: ${info.name}
       Link: ${info.preview_url}
       Album: ${info.album.name}
       ***************`)
-      })
-      .catch(e => console.log(e))
-  } else {
-    console.log('Please enter a song to search!')
-  }
+    })
+    .catch(e => console.log('Please try searching again, that search did not yield any results.'))
 }
 
 const lightsCameraAction = lookup => {
+  if (lookup === '') {
+    lookup = 'Mr Nobody'
+  }
+
   axios.get(`http://www.omdbapi.com/?t=${lookup}&apikey=8bf4b530`)
     .then(({ data }) => {
       console.log(`      ***************
@@ -70,7 +74,7 @@ const lightsCameraAction = lookup => {
       Actors: ${data.Actors}
       ***************`)
     })
-    .catch(e => console.log(e))
+    .catch(e => console.log(`Please provide a valid movie to search for.`))
 }
 
 const justDoIt = _ => {
